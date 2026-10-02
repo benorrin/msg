@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>msg</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<main id="auth" class="center" hidden>
+  <form id="auth-form" class="card" autocomplete="on">
+    <h1>msg</h1>
+    <p class="muted">Encrypted group chat with quiet side channels.</p>
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tab-login" aria-selected="true">Sign in</button>
+      <button type="button" role="tab" id="tab-register" aria-selected="false">Create account</button>
+    </div>
+    <label>Username
+      <input id="f-user" name="username" autocomplete="username" required minlength="3" maxlength="32" pattern="[A-Za-z0-9_\-]+" autocapitalize="none" spellcheck="false">
+    </label>
+    <label>Password
+      <input id="f-pass" name="password" type="password" autocomplete="current-password" required minlength="8">
+    </label>
+    <label id="f-pass2-row" hidden>Confirm password
+      <input id="f-pass2" type="password" autocomplete="new-password" minlength="8">
+    </label>
+    <p id="auth-note" class="muted small" hidden>
+      Your encryption keys are created in this browser and locked with your password.
+      If you forget it, your messages cannot be recovered &mdash; nobody, including the server, can reset it.
+    </p>
+    <p id="auth-err" class="error" role="alert" hidden></p>
+    <button id="auth-submit" class="primary" type="submit">Sign in</button>
+  </form>
+</main>
+
+<main id="pending" class="center" hidden>
+  <div class="card">
+    <h1>Waiting for approval</h1>
+    <p>Your account exists, but you can't read or post until a current member gives you the channel key.
+      This page continues automatically once they do.</p>
+    <p class="muted small">Tell them your key fingerprint so they can check it's really you:</p>
+    <p><code id="pending-fp" class="fp"></code></p>
+    <button id="pending-out" type="button">Sign out</button>
+  </div>
+</main>
+
+<div id="app" hidden>
+  <nav id="sidebar" aria-label="Channels">
+    <div class="brand">msg</div>
+    <ul id="channels"></ul>
+    <div class="spacer"></div>
+    <div id="me-box">
+      <div id="me-name"></div>
+      <div id="net" class="muted small" title="Connection and round-trip time"></div>
+      <div class="row">
+        <button id="btn-members" type="button" class="link">Members <span id="pending-badge" class="badge" hidden></span></button>
+        <button id="btn-out" type="button" class="link">Sign out</button>
+      </div>
+    </div>
+  </nav>
+
+  <section id="pane">
+    <header id="head">
+      <h2 id="head-title"></h2>
+      <p id="head-sub" class="muted small"></p>
+    </header>
+    <div id="views"></div>
+    <div id="composer"></div>
+  </section>
+</div>
+
+<dialog id="dlg"></dialog>
+<div id="toast" role="status" aria-live="polite" hidden></div>
+
+<script type="module" src="/js/app.js"></script>
+</body>
+</html>
